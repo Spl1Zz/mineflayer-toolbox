@@ -1,4 +1,5 @@
 //made by SpliZz
+const fs = require('fs');
 
 //autototem
 let autoTotemListener;
@@ -123,11 +124,76 @@ function autoeat(bot, action) {
     }
 }
 
+//spammers
+let spamInterval;
+function spammer(bot, action, message, delay) {
+    if (action === "on") {
+        if (spamInterval) clearInterval(spamInterval);
+
+        spamInterval = setInterval(() => {
+            bot.chat(message);
+        }, delay);
+    }
+
+    else if (action === "off") {
+        if (spamInterval) {
+            clearInterval(spamInterval);
+            spamInterval = null;
+        }
+    }
+}
+
+let fileSpamInterval;
+function filespammer(bot, action, file, order, delay) {
+    if (action === "on") {
+        if (fs.existsSync(file)) {
+            const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
+
+            if (lines.length === 0) return;
+
+            if (fileSpamInterval) clearInterval(fileSpamInterval);
+
+            if (order === "random") {
+                fileSpamInterval = setInterval(() => {
+                    const randomLine = lines[Math.floor(Math.random() * lines.length)];
+                    bot.chat(randomLine);
+                }, delay);
+            }
+
+            else if (order === "first") {
+                let index = 0;
+                fileSpamInterval = setInterval(() => {
+                    bot.chat(lines[index]);
+                    index = (index + 1) % lines.length;
+                }, delay);
+            }
+
+            else if (order === "last") {
+                let index = lines.length - 1;
+                fileSpamInterval = setInterval(() => {
+                    bot.chat(lines[index]);
+                    index = (index - 1 + lines.length) % lines.length;
+                }, delay);
+            }
+        }
+    }
+
+    else if (action === "off") {
+        if (fileSpamInterval) {
+            clearInterval(fileSpamInterval);
+            fileSpamInterval = null;
+        }
+    }
+}
+
 
 function plugin(bot) {
     bot.autototem = (action, hand) => autototem(bot, action, hand);
     bot.autoarmor = (action) => autoarmor(bot, action);
     bot.autoeat = (action) => autoeat(bot, action);
+    bot.spammer = (action, message, delay) => spammer(bot, action, message, delay);
+    bot.filespammer = (action, file, order, delay) => filespammer(bot, action, file, order, delay);
 }
 
 module.exports = plugin;
