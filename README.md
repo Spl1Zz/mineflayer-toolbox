@@ -6,6 +6,8 @@ Current modules:
 - **Auto Totem**
 - **Auto Armor**
 - **Auto Eating**
+- **Spammer**
+- **Filespammer**
 
 All features are toggleable and execute actions on every `physicsTick`.
 
