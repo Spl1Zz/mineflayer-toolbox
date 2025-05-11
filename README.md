@@ -1,8 +1,10 @@
-# Mineflayer Survival Plugin
+# Mineflayer Toolbox
 
-A compact Mineflayer plugin providing three essential survival features:
-- **Auto Totem Equip**
-- **Auto Armor Equip**
+A set of tools aiming to make your anarchy experience with your bot better with some useful modules based off popular hack clients.
+
+Current modules:
+- **Auto Totem**
+- **Auto Armor**
 - **Auto Eating**
 
 All features are toggleable and execute actions on every `physicsTick`.
@@ -50,7 +52,7 @@ Automatically eats when the bot’s hunger drops below 18.
 **Behavior:**
 - Prioritizes high-quality food (`cooked_meat` types).
 - If no good food is found, falls back to any other edible items.
-- Prevents multiple eat attempts at the same time.
+
 
 ---
 
@@ -58,7 +60,7 @@ Automatically eats when the bot’s hunger drops below 18.
 
 ```js
 const mineflayer = require('mineflayer');
-const survivalPlugin = require('./yourPluginFile'); // Replace with actual path
+const toolbox = require('mineflayer-toolbox');
 
 const bot = mineflayer.createBot({
   host: 'localhost',
@@ -66,9 +68,9 @@ const bot = mineflayer.createBot({
   username: 'Bot'
 });
 
-bot.once('spawn', () => {
-  survivalPlugin(bot);
+bot.loadPlugin(toolbox);
 
+bot.once('spawn', () => {
   bot.autototem('on', 'offhand');
   bot.autoarmor('on');
   bot.autoeat('on');
