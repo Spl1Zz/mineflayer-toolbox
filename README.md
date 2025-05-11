@@ -41,7 +41,7 @@ Automatically spams set messages or file content
 
 **Filespammer Arguments:**
 - `action` – `"on"` to activate, `"off"` to deactivate
-- `file` – The file with the messages. It should be a txt and every message should have its own line
+- `file` – **MUST BE IN THE SAME DIRECTORY AS THE BOT** The file with the messages. It should be a txt and every message should have its own line.
 - `order` – `"random"` random order, `"first"` first to last, `"last"` last to first
 - `delay` – The delay messages will be spammed in ms. (Do not go under 300 or the bot will most likely get kicked)
 
