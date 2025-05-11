@@ -28,6 +28,26 @@ Automatically equips a Totem of Undying in the desired hand when none is equippe
 
 ---
 
+### Spammer (`bot.spammer(action, message, delay)` and `bot.filespammer(action, file, order, delay`)
+
+Automatically spams set messages or file content
+
+**Spammer Arguments:**
+- `action` – `"on"` to activate, `"off"` to deactivate
+- `message` – The message that gets spammed
+- `delay` – The delay messages will be spammed in ms. (Do not go under 300 or the bot will most likely get kicked)
+
+**Filespammer Arguments:**
+- `action` – `"on"` to activate, `"off"` to deactivate
+- `file` – The file with the messages. It should be a txt and every message should have its own line
+- `order` – `"random"` random order, `"first"` first to last, `"last"` last to first
+- `delay` – The delay messages will be spammed in ms. (Do not go under 300 or the bot will most likely get kicked)
+
+**Behavior:**
+- Spams either the set message or the file in the set delay.
+
+---
+
 ### Auto Armor (`bot.autoarmor(action)`)
 
 Automatically equips the best armor available in the bot’s inventory.
