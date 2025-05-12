@@ -2,12 +2,17 @@
 
 A set of tools aiming to make your anarchy experience with your bot better with some useful modules based off popular hack clients.
 
-Current modules:
+Current modules (not all are documented yet):
 - **Auto Totem**
 - **Auto Armor**
 - **Auto Eating**
 - **Spammer**
 - **Filespammer**
+- **AntiAFK**
+- **Greeter**
+- **Velocity**
+- **Chatlogger**
+- **Confighandler**
 
 All features are toggleable and execute actions on every `physicsTick`.
 
