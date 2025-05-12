@@ -1,13 +1,21 @@
 {
   "name": "mineflayer-toolbox",
-  "version": "1.0.0",
-  "description": "A mineflayer plugin that provides modules seen in hack clients for your bot for automation",
+  "version": "1.2.1",
+  "description": "A set of tools aiming to make your anarchy experience with your bot better with some useful modules based off popular hack clients",
   "keywords": [
     "mineflayer",
     "minecraft",
     "minecrafthack",
     "mineflayerbot"
   ],
+  "homepage": "https://github.com/Spl1Zz/mineflayer-toolbox#readme",
+  "bugs": {
+    "url": "https://github.com/Spl1Zz/mineflayer-toolbox/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spl1Zz/mineflayer-toolbox.git"
+  },
   "license": "MIT",
   "author": "SpliZz",
   "type": "commonjs",
