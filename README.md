@@ -13,6 +13,7 @@ Current modules (not all are documented yet):
 - **Velocity**
 - **Chatlogger**
 - **Confighandler**
+- **Mimicry**
 
 All features are toggleable and execute actions on every `physicsTick`.
 
@@ -80,6 +81,19 @@ Automatically eats when the bot’s hunger drops below 18.
 - Prioritizes high-quality food (`cooked_meat` types).
 - If no good food is found, falls back to any other edible items.
 
+---
+
+### Mimicry (`bot.mimicry(action)`)
+
+Makes the bot mimic the behavior of the nearest player.
+
+**Arguments:**
+- `action` – `"on"` to activate, `"off"` to deactivate
+
+**Behavior:**
+- Continuously looks at the nearest player.
+- Mimics their sneaking status.
+- If the player swings their arm (i.e., punches) while at least 5 blocks away, the bot responds by swinging three times in return.
 
 ---
 

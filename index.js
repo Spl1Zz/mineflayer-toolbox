@@ -322,6 +322,86 @@ function chatlogger(bot, action) {
   }
 }
 
+//mimicry -v0e
+let mimicEnabled = false;
+let mimicInterval = null;
+
+function mimicry(bot, action) {
+  registerModuleCall('mimicry', action);
+
+  function isSneaking(entity) {
+    if (!entity || !entity.metadata) return false;
+    const flags = entity.metadata[0];
+    return (flags & 0x02) !== 0;
+  }
+
+  if (action === 'on') {
+    if (mimicEnabled) return;
+    mimicEnabled = true;
+
+    mimicInterval = setInterval(() => {
+      const players = Object.values(bot.entities).filter(entity =>
+        entity.type === 'player' && entity.username !== bot.username
+      );
+      if (players.length === 0) return;
+
+      let nearest = null;
+      let minDistance = Infinity;
+
+      for (const player of players) {
+        if (!player?.position) continue;
+        const dist = bot.entity.position.distanceTo(player.position);
+        if (dist < minDistance) {
+          nearest = player;
+          minDistance = dist;
+        }
+      }
+
+      if (!nearest || !nearest.position) return;
+
+      // Look at player
+      bot.lookAt(nearest.position.offset(0, 1.6, 0), true);
+
+      // Sneak mimic
+      bot.setControlState("sneak", isSneaking(nearest));
+    }, 50); // ~20 times per second
+
+    // Swing mimic
+    bot._mimicSwingHandler = (entity) => {
+      if (!mimicEnabled) return;
+      if (entity.type !== 'player' || entity.username === bot.username) return;
+
+      const dist = bot.entity.position.distanceTo(entity.position);
+      if (dist >= 5) {
+        bot.lookAt(entity.position.offset(0, 1.6, 0), true);
+        bot.swingArm('right');
+        setTimeout(() => bot.swingArm('right'), 150);
+        setTimeout(() => bot.swingArm('right'), 300);
+      }
+    };
+
+    bot.on('entitySwingArm', bot._mimicSwingHandler);
+
+  } else if (action === 'off') {
+    mimicEnabled = false;
+
+    if (mimicInterval) {
+      clearInterval(mimicInterval);
+      mimicInterval = null;
+    }
+
+    bot.setControlState('sneak', false);
+
+    if (bot._mimicSwingHandler) {
+      bot.removeListener('entitySwingArm', bot._mimicSwingHandler);
+      delete bot._mimicSwingHandler;
+    }
+  }
+}
+
+
+
+
 //config
 const configPath = 'pluginconfig.json'
 let config = {}
@@ -370,6 +450,7 @@ function plugin(bot) {
     bot.greeter = (action, mode) => greeter(bot, action, mode);
     bot.velocity = (action) => velocity(bot, action);
     bot.chatlogger = (action) => chatlogger(bot, action);
+    bot.mimicry = (action) => mimicry(bot, action);
     bot.confighandler = (action) => confighandler(bot, action);
 }
 
